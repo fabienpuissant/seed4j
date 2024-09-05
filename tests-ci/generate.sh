@@ -396,6 +396,7 @@ elif [[ $application == 'reactapp' ]]; then
   frontend_server_plugin
   applyModules \
     "react-core" \
+    "react-i18next" \
     "cypress-component-tests"
 
   cucumber_with_jwt
