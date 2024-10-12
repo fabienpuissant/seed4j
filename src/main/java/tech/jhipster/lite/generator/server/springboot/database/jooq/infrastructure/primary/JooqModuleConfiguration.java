@@ -1,63 +1,63 @@
-package tech.jhipster.lite.generator.server.springboot.database.jpa.infrastructure.primary;
+package tech.jhipster.lite.generator.server.springboot.database.jooq.infrastructure.primary;
 
-import static tech.jhipster.lite.shared.slug.domain.JHLiteFeatureSlug.JPA_PERSISTENCE;
-import static tech.jhipster.lite.shared.slug.domain.JHLiteModuleSlug.JPA_MARIADB;
-import static tech.jhipster.lite.shared.slug.domain.JHLiteModuleSlug.JPA_MSSQL;
-import static tech.jhipster.lite.shared.slug.domain.JHLiteModuleSlug.JPA_MYSQL;
-import static tech.jhipster.lite.shared.slug.domain.JHLiteModuleSlug.JPA_POSTGRESQL;
+import static tech.jhipster.lite.shared.slug.domain.JHLiteFeatureSlug.JOOQ;
+import static tech.jhipster.lite.shared.slug.domain.JHLiteModuleSlug.JOOQ_MARIADB;
+import static tech.jhipster.lite.shared.slug.domain.JHLiteModuleSlug.JOOQ_MSSQL;
+import static tech.jhipster.lite.shared.slug.domain.JHLiteModuleSlug.JOOQ_MYSQL;
+import static tech.jhipster.lite.shared.slug.domain.JHLiteModuleSlug.JOOQ_POSTGRESQL;
 import static tech.jhipster.lite.shared.slug.domain.JHLiteModuleSlug.SPRING_BOOT;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import tech.jhipster.lite.generator.server.springboot.database.jpa.application.JpaApplicationService;
+import tech.jhipster.lite.generator.server.springboot.database.jooq.application.JooqApplicationService;
 import tech.jhipster.lite.module.domain.resource.JHipsterModuleOrganization;
 import tech.jhipster.lite.module.domain.resource.JHipsterModulePropertiesDefinition;
 import tech.jhipster.lite.module.domain.resource.JHipsterModuleResource;
 
 @Configuration
-class JpaModuleConfiguration {
+class JooqModuleConfiguration {
 
   private static final String API_DOC_GROUP = "Spring Boot - Database";
 
   @Bean
-  JHipsterModuleResource jpaPostgresqlModule(JpaApplicationService postgresql) {
+  JHipsterModuleResource jooqPostgresqlModule(JooqApplicationService postgresql) {
     return JHipsterModuleResource.builder()
-      .slug(JPA_POSTGRESQL)
+      .slug(JOOQ_POSTGRESQL)
       .propertiesDefinition(properties())
-      .apiDoc(API_DOC_GROUP, "Add JPA with Postgresql to project")
+      .apiDoc(API_DOC_GROUP, "Add Jooq with Postgresql to project")
       .organization(organization())
       .tags(tags())
       .factory(postgresql::buildPostgresql);
   }
 
   @Bean
-  JHipsterModuleResource jpaMariaDBModule(JpaApplicationService applicationService) {
+  JHipsterModuleResource jooqMariaDBModule(JooqApplicationService applicationService) {
     return JHipsterModuleResource.builder()
-      .slug(JPA_MARIADB)
+      .slug(JOOQ_MARIADB)
       .propertiesDefinition(properties())
-      .apiDoc(API_DOC_GROUP, "Add JPA with MariaDB to project")
+      .apiDoc(API_DOC_GROUP, "Add Jooq with MariaDB to project")
       .organization(organization())
       .tags(tags())
       .factory(applicationService::buildMariaDB);
   }
 
   @Bean
-  JHipsterModuleResource jpaMmySQLModule(JpaApplicationService applicationService) {
+  JHipsterModuleResource jooqMySQLModule(JooqApplicationService applicationService) {
     return JHipsterModuleResource.builder()
-      .slug(JPA_MYSQL)
+      .slug(JOOQ_MYSQL)
       .propertiesDefinition(properties())
-      .apiDoc(API_DOC_GROUP, "Add JPA with MySQL to project")
+      .apiDoc(API_DOC_GROUP, "Add Jooq with MySQL to project")
       .organization(organization())
       .tags(tags())
       .factory(applicationService::buildMySQL);
   }
 
   @Bean
-  JHipsterModuleResource jpaMsSQLModule(JpaApplicationService applicationService) {
+  JHipsterModuleResource jooqMsSQLModule(JooqApplicationService applicationService) {
     return JHipsterModuleResource.builder()
-      .slug(JPA_MSSQL)
+      .slug(JOOQ_MSSQL)
       .propertiesDefinition(properties())
-      .apiDoc(API_DOC_GROUP, "Add JPA with MsSQL to project")
+      .apiDoc(API_DOC_GROUP, "Add Jooq with MsSQL to project")
       .organization(organization())
       .tags(tags())
       .factory(applicationService::buildMsSQL);
@@ -73,7 +73,7 @@ class JpaModuleConfiguration {
   }
 
   private static JHipsterModuleOrganization organization() {
-    return JHipsterModuleOrganization.builder().feature(JPA_PERSISTENCE).addDependency(SPRING_BOOT).build();
+    return JHipsterModuleOrganization.builder().feature(JOOQ).addDependency(SPRING_BOOT).build();
   }
 
   private static String[] tags() {

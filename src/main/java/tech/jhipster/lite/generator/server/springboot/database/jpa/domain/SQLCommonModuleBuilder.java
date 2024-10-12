@@ -45,7 +45,8 @@ final class SQLCommonModuleBuilder {
     Assert.notNull("testContainerArtifactId", testContainerArtifactId);
 
     String databaseId = databaseType.id();
-    JHipsterSource source = from("server/springboot/database/jpa");
+    JHipsterSource commonSource = from("server/springboot/database/common");
+    JHipsterSource jpaSource = from("server/springboot/database/jpa");
     JHipsterDestination mainDestination = toSrcMainJava()
       .append(properties.packagePath())
       .append("wire")
@@ -59,13 +60,13 @@ final class SQLCommonModuleBuilder {
         .put("databaseType", databaseId)
         .put(databaseId + "DockerImageWithVersion", dockerImage.fullName()) // To be used in <databaseId>.yml docker-compose file
         .and()
-      .documentation(documentationTitle, source.template("databaseType.md"))
+      .documentation(documentationTitle, commonSource.template("databaseType.md"))
       .startupCommands()
         .dockerCompose(startupCommand(databaseId))
         .and()
       .files()
-        .add(source.template("DatabaseConfiguration.java"), mainDestination.append("DatabaseConfiguration.java"))
-        .add(source.append("docker").template(databaseId + ".yml"), toSrcMainDocker().append(databaseId + ".yml"))
+        .add(jpaSource.template("DatabaseConfiguration.java"), mainDestination.append("DatabaseConfiguration.java"))
+        .add(commonSource.append("docker").template(databaseId + ".yml"), toSrcMainDocker().append(databaseId + ".yml"))
         .and()
       .javaDependencies()
         .addDependency(groupId("org.springframework.boot"), artifactId("spring-boot-starter-data-jpa"))

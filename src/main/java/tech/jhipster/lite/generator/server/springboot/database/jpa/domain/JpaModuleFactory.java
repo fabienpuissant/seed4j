@@ -119,7 +119,7 @@ public class JpaModuleFactory {
 
   public JHipsterModule buildMsSQL(JHipsterModuleProperties properties) {
     DockerImageVersion dockerImage = dockerImages.get("mcr.microsoft.com/mssql/server");
-    JHipsterSource source = from("server/springboot/database/jpa");
+    JHipsterSource source = from("server/springboot/database/common");
 
     //@formatter:off
     return sqlCommonModuleBuilder(properties, DatabaseType.MSSQL, dockerImage, documentationTitle("MsSQL"), artifactId("mssqlserver"))

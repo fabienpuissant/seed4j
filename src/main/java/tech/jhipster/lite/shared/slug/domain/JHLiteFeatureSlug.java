@@ -21,6 +21,7 @@ public enum JHLiteFeatureSlug implements JHipsterFeatureSlugFactory {
   CODE_COVERAGE_JAVA("code-coverage-java"),
   JAVA_BUILD_TOOL("java-build-tool"),
   JAVA_BUILD_TOOL_WRAPPER("java-build-tool-wrapper"),
+  JOOQ("jooq"),
   JPA_PERSISTENCE("jpa-persistence"),
   LICENSE("license"),
   OAUTH_PROVIDER("oauth-provider"),
