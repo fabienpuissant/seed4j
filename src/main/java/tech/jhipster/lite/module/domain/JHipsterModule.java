@@ -37,6 +37,7 @@ import tech.jhipster.lite.module.domain.javadependency.JavaDependency.JavaDepend
 import tech.jhipster.lite.module.domain.javaproperties.*;
 import tech.jhipster.lite.module.domain.javaproperties.JHipsterModuleSpringFactories.JHipsterModuleSpringFactoriesBuilder;
 import tech.jhipster.lite.module.domain.javaproperties.JHipsterModuleSpringProperties.JHipsterModuleSpringPropertiesBuilder;
+import tech.jhipster.lite.module.domain.jooqplugin.JooqModuleCodegenConfiguration;
 import tech.jhipster.lite.module.domain.mavenplugin.*;
 import tech.jhipster.lite.module.domain.mavenplugin.JHipsterModuleMavenPlugins.JHipsterModuleMavenPluginsBuilder;
 import tech.jhipster.lite.module.domain.mavenplugin.MavenPlugin.MavenPluginGroupIdBuilder;
@@ -188,6 +189,10 @@ public final class JHipsterModule {
 
   public static JavaDependencyGroupIdBuilder javaDependency() {
     return JavaDependency.builder();
+  }
+
+  public static JooqModuleCodegenConfiguration.JooqModuleCodegenConfigurationBuilder jooqModuleCodegenConfiguration() {
+    return JooqModuleCodegenConfiguration.builder();
   }
 
   public static MavenBuildExtensionGroupIdBuilder mavenBuildExtension() {

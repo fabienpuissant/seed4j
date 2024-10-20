@@ -16,6 +16,11 @@ import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 
 public class JooqModuleFactory {
 
+  public static final String GENERATE = "generate";
+  public static final String JOOQ_CODEGEN = "jooq-codegen";
+  public static final String JOOQ_CODEGEN_MAVEN = "jooq-codegen-maven";
+  public static final String ORG_JOOQ = "org.jooq";
+  public static final String MSSQL_PASSWORD = "yourStrong(!)Password";
   public static final String ORG_POSTGRESQL = "org.postgresql";
   private static final String MYSQL = "mysql";
   private static final String MYSQL_GROUP_ID = "com.mysql";
@@ -53,11 +58,17 @@ public class JooqModuleFactory {
       .and()
       .mavenPlugins()
         .plugin(mavenPlugin()
-          .groupId("org.jooq")
-          .artifactId("jooq-codegen-maven")
+          .groupId(ORG_JOOQ)
+          .artifactId(JOOQ_CODEGEN_MAVEN)
           .versionSlug("jooq")
-          .addExecution(pluginExecution().goals("generate").id("jooq-codegen").phase(MavenBuildPhase.GENERATE_RESOURCES))
-          .configuration(jooqCodegenPluginConfiguration("jdbc:postgresql://localhost:5432/" + properties.projectBaseName().name(), DatabaseType.POSTGRESQL, properties.projectBaseName().name(), "", "public"))
+          .addExecution(pluginExecution().goals(GENERATE).id(JOOQ_CODEGEN).phase(MavenBuildPhase.GENERATE_RESOURCES))
+          .configuration(jooqModuleCodegenConfiguration()
+            .database(tech.jhipster.lite.module.domain.jooqplugin.DatabaseType.POSTGRESQL)
+            .databaseUrl("jdbc:postgresql://localhost:5432/" + properties.projectBaseName().name())
+            .user(properties.projectBaseName().name())
+            .inputSchema("public")
+            .build()
+            .getConfiguration())
           .build())
       .and()
       .springMainProperties()
@@ -96,11 +107,17 @@ public class JooqModuleFactory {
       .and()
       .mavenPlugins()
       .plugin(mavenPlugin()
-        .groupId("org.jooq")
-        .artifactId("jooq-codegen-maven")
+        .groupId(ORG_JOOQ)
+        .artifactId(JOOQ_CODEGEN_MAVEN)
         .versionSlug("jooq")
-        .addExecution(pluginExecution().goals("generate").id("jooq-codegen").phase(MavenBuildPhase.GENERATE_RESOURCES))
-        .configuration(jooqCodegenPluginConfiguration("jdbc:mariadb://localhost:3306/" + properties.projectBaseName().name(), DatabaseType.MARIADB, "root", "", properties.projectBaseName().name()))
+        .addExecution(pluginExecution().goals(GENERATE).id(JOOQ_CODEGEN).phase(MavenBuildPhase.GENERATE_RESOURCES))
+        .configuration(jooqModuleCodegenConfiguration()
+          .database(tech.jhipster.lite.module.domain.jooqplugin.DatabaseType.MARIADB)
+          .databaseUrl("jdbc:mariadb://localhost:3306/" + properties.projectBaseName().name())
+            .user("root")
+            .inputSchema("properties.projectBaseName().name()")
+            .build()
+            .getConfiguration())
         .build())
       .and()
       .springMainProperties()
@@ -126,11 +143,17 @@ public class JooqModuleFactory {
       .and()
       .mavenPlugins()
       .plugin(mavenPlugin()
-        .groupId("org.jooq")
-        .artifactId("jooq-codegen-maven")
+        .groupId(ORG_JOOQ)
+        .artifactId(JOOQ_CODEGEN_MAVEN)
         .versionSlug("jooq")
-        .addExecution(pluginExecution().goals("generate").id("jooq-codegen").phase(MavenBuildPhase.GENERATE_RESOURCES))
-        .configuration(jooqCodegenPluginConfiguration("jdbc:mysql://localhost:3306/" + properties.projectBaseName().name(), DatabaseType.MYSQL, "root", "", properties.projectBaseName().name()))
+        .addExecution(pluginExecution().goals(GENERATE).id(JOOQ_CODEGEN).phase(MavenBuildPhase.GENERATE_RESOURCES))
+        .configuration(jooqModuleCodegenConfiguration()
+          .database(tech.jhipster.lite.module.domain.jooqplugin.DatabaseType.MYSQL)
+          .databaseUrl("jdbc:mysql://localhost:3306/" + properties.projectBaseName().name())
+          .user("root")
+          .inputSchema("properties.projectBaseName().name()")
+          .build()
+          .getConfiguration())
         .build())
       .and()
       .springMainProperties()
@@ -166,11 +189,17 @@ public class JooqModuleFactory {
       .and()
       .mavenPlugins()
       .plugin(mavenPlugin()
-        .groupId("org.jooq")
-        .artifactId("jooq-codegen-maven")
+        .groupId(ORG_JOOQ)
+        .artifactId(JOOQ_CODEGEN_MAVEN)
         .versionSlug("jooq")
-        .addExecution(pluginExecution().goals("generate").id("jooq-codegen").phase(MavenBuildPhase.GENERATE_RESOURCES))
-        .configuration(jooqCodegenPluginConfiguration("jdbc:sqlserver://localhost:1433;database=" + properties.projectBaseName().name() + ";trustServerCertificate=true", DatabaseType.MSSQL, "SA", "yourStrong(!)Password", "model"))
+        .addExecution(pluginExecution().goals(GENERATE).id(JOOQ_CODEGEN).phase(MavenBuildPhase.GENERATE_RESOURCES))
+        .configuration(jooqModuleCodegenConfiguration()
+          .database(tech.jhipster.lite.module.domain.jooqplugin.DatabaseType.MSSQL)
+          .databaseUrl("jdbc:sqlserver://localhost:1433;database=" + properties.projectBaseName().name() + ";trustServerCertificate=true")
+          .user("SA")
+          .inputSchema("model")
+          .password(MSSQL_PASSWORD)
+          .getConfiguration())
         .build())
       .and()
       .springMainProperties()
@@ -179,7 +208,7 @@ public class JooqModuleFactory {
         propertyValue("jdbc:sqlserver://localhost:1433;database=" + properties.projectBaseName().name() + ";trustServerCertificate=true")
       )
       .set(propertyKey(SPRING_DATASOURCE_USERNAME), propertyValue("SA"))
-      .set(propertyKey("spring.datasource.password"), propertyValue("yourStrong(!)Password"))
+      .set(propertyKey("spring.datasource.password"), propertyValue(MSSQL_PASSWORD))
       .set(propertyKey(SPRING_DATASOURCE_DRIVER_CLASS_NAME), propertyValue("com.microsoft.sqlserver.jdbc.SQLServerDriver"))
       .and()
       .springTestProperties()
@@ -190,7 +219,7 @@ public class JooqModuleFactory {
         )
       )
       .set(propertyKey(SPRING_DATASOURCE_USERNAME), propertyValue("SA"))
-      .set(propertyKey("spring.datasource.password"), propertyValue("yourStrong(!)Password"))
+      .set(propertyKey("spring.datasource.password"), propertyValue(MSSQL_PASSWORD))
       .and()
       .mandatoryReplacements()
       .in(path("src/test/java").append(properties.basePackage().path()).append("IntegrationTest.java"))
@@ -205,60 +234,5 @@ public class JooqModuleFactory {
       .springMainLogger("org.reflections", LogLevel.WARN)
       .build();
     //@formatter:on
-  }
-
-  //TODO Create an API for MavenPluginConfiguration with a builder
-  private String jooqCodegenPluginConfiguration(
-    String databaseUrl,
-    DatabaseType databaseType,
-    String user,
-    String password,
-    String inputSchema
-  ) {
-    return String.format(
-      """
-      <jdbc>
-        <driver>%s</driver>
-        <url>%s</url>
-        <user>%s</user>
-        <password>%s</password>
-      </jdbc>
-      <generator>
-        <database>
-          <name>%s</name>
-          <includes>.*</includes>
-          <inputSchema>%s</inputSchema>
-        </database>
-        <target>
-          <packageName>org.jooq.codegen</packageName>
-          <directory>target/generated-sources/jooq</directory>
-        </target>
-      </generator>
-      """,
-      databaseDriver(databaseType),
-      databaseUrl,
-      user,
-      password,
-      databaseJooqName(databaseType),
-      inputSchema
-    );
-  }
-
-  private static String databaseJooqName(DatabaseType databaseType) {
-    return switch (databaseType) {
-      case POSTGRESQL -> "org.jooq.meta.postgres.PostgresDatabase";
-      case MYSQL -> "org.jooq.meta.mysql.MySQLDatabase";
-      case MARIADB -> "org.jooq.meta.mariadb.MariaDBDatabase";
-      case MSSQL -> "org.jooq.meta.sqlserver.SQLServerDatabase";
-    };
-  }
-
-  private static String databaseDriver(DatabaseType databaseType) {
-    return switch (databaseType) {
-      case POSTGRESQL -> "org.postgresql.Driver";
-      case MARIADB -> "org.mariadb.jdbc.Driver";
-      case MYSQL -> "com.mysql.jdbc.Driver";
-      case MSSQL -> "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-    };
   }
 }

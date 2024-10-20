@@ -19,7 +19,7 @@ import tech.jhipster.lite.module.infrastructure.secondary.JHipsterModulesAsserti
 
 @UnitTest
 @ExtendWith(MockitoExtension.class)
-public class JooqModuleFactoryTest {
+class JooqModuleFactoryTest {
 
   @Mock
   private DockerImages dockerImages;
