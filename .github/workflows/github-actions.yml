@@ -234,6 +234,7 @@ jobs:
           - oauth2app
           - mysqlapp
           - mariadbapp
+          - jooqmariadbapp
           - mssqlapp
           - flywayapp
           - undertowapp

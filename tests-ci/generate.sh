@@ -238,6 +238,13 @@ elif [[ $application == 'mariadbapp' ]]; then
   applyModules "jpa-mariadb" "liquibase"
   applyModules "ehcache-xml-config"
 
+elif [[ $application == 'jooqmariadbapp' ]]; then
+  init_server
+  spring_boot_mvc
+  sonar_back
+
+  applyModules "jooq-mariadb"
+
 elif [[ $application == 'mssqlapp' ]]; then
   init_server
   spring_boot_mvc
